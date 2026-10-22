@@ -81,5 +81,11 @@ namespace Quan_ly_chi_tieu_sinh_vien
             frmDangKy.ShowDialog();
             
         }
+
+        private void btnQuenMK_Click(object sender, EventArgs e)
+        {
+            FrmQuenMatKhau frmQuenMatKhau = new FrmQuenMatKhau();
+            frmQuenMatKhau.ShowDialog();
+        }
     }
 }

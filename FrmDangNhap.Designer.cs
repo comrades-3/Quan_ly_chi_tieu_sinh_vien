@@ -109,10 +109,11 @@ namespace Quan_ly_chi_tieu_sinh_vien
             // 
             this.btnQuenMK.Location = new System.Drawing.Point(510, 314);
             this.btnQuenMK.Name = "btnQuenMK";
-            this.btnQuenMK.Size = new System.Drawing.Size(96, 40);
+            this.btnQuenMK.Size = new System.Drawing.Size(128, 40);
             this.btnQuenMK.TabIndex = 7;
             this.btnQuenMK.Text = "Quên mật khẩu";
             this.btnQuenMK.UseVisualStyleBackColor = true;
+            this.btnQuenMK.Click += new System.EventHandler(this.btnQuenMK_Click);
             // 
             // FrmDangNhap
             // 

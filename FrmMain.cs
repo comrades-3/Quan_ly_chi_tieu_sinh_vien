@@ -13,18 +13,22 @@ namespace Quan_ly_chi_tieu_sinh_vien
 {
     public partial class FrmDashboard : Form
     {
-        private bool menuThuGon = false;
+        private bool menuphongto = false;
+        private const int MENU_BAN_DAU = 210;  
+        private const int MENU_PHONG_TO = 265;
 
         public FrmDashboard()
         {
             InitializeComponent();
             btnMenu.IconChar = IconChar.Bars;
             btnMenu.IconColor = Color.White;
-            btnMenu.IconSize = 24;
+            btnMenu.IconSize = 22;
             btnMenu.Text = "";
             btnMenu.FlatStyle = FlatStyle.Flat;
             btnMenu.FlatAppearance.BorderSize = 0;
             btnMenu.BackColor = Color.FromArgb(23, 108, 165);
+            pnlSidebar.Width = MENU_BAN_DAU;
+
             LoadForm(new FrmTongQuan());
         }
 
@@ -51,20 +55,13 @@ namespace Quan_ly_chi_tieu_sinh_vien
 
         private void btnTongQuan_Click(object sender, EventArgs e)
         {
-            // Tổng quan là form chính, chỉ cần xóa nội dung panel để về trang chủ
             LoadForm(new FrmTongQuan());
         }
 
         private void btnMenu_Click(object sender, EventArgs e)
         {
-            menuThuGon = !menuThuGon;
-
-            pnlSidebar.Width = menuThuGon ? 60 : 220;
-
-            btnTongQuan.Text = menuThuGon ? "" : "Tổng quan";
-            btnQuanLyThuChi.Text = menuThuGon ? "" : "Quản lý thu chi";
-            btnDanhMuc.Text = menuThuGon ? "" : "Danh mục";
-            btnDangXuat.Text = menuThuGon ? "" : "Đăng xuất";
+            menuphongto = !menuphongto;
+            pnlSidebar.Width = menuphongto ? MENU_PHONG_TO : MENU_BAN_DAU;
         }
 
         private void btnQuanLyThuChi_Click(object sender, EventArgs e)
@@ -81,8 +78,22 @@ namespace Quan_ly_chi_tieu_sinh_vien
         {
             FrmDangNhap frmDangNhap = new FrmDangNhap();
             frmDangNhap.Show();
-            this.Hide();
+            this.Close();
 
+        }
+
+        private void btnBaoCao_Click(object sender, EventArgs e)
+        {
+            FrmBaoCao frmBaoCao = new FrmBaoCao();
+            frmBaoCao.Show();
+            this.Close();
+        }
+
+        private void btnTietKiem_Click(object sender, EventArgs e)
+        {
+            FrmTietKiem frmTietKiem = new FrmTietKiem();
+            frmTietKiem.Show();
+            this.Close();
         }
     }
 }

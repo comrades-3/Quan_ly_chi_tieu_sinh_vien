@@ -58,6 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseProcessing.cs" />
+    <Compile Include="FrmBaoCao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmBaoCao.Designer.cs">
+      <DependentUpon>FrmBaoCao.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmDangKy.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,11 +94,23 @@
     <Compile Include="frmQuanLyThuChi.Designer.cs">
       <DependentUpon>frmQuanLyThuChi.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmQuenMatKhau.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmQuenMatKhau.Designer.cs">
+      <DependentUpon>FrmQuenMatKhau.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmThemSuaGiaoDich.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmThemSuaGiaoDich.Designer.cs">
       <DependentUpon>FrmThemSuaGiaoDich.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmTietKiem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTietKiem.Designer.cs">
+      <DependentUpon>FrmTietKiem.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmTongQuan.cs">
       <SubType>Form</SubType>
@@ -117,8 +135,14 @@
     <EmbeddedResource Include="frmQuanLyThuChi.resx">
       <DependentUpon>frmQuanLyThuChi.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmQuenMatKhau.resx">
+      <DependentUpon>FrmQuenMatKhau.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmThemSuaGiaoDich.resx">
       <DependentUpon>FrmThemSuaGiaoDich.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmTietKiem.resx">
+      <DependentUpon>FrmTietKiem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmTongQuan.resx">
       <DependentUpon>FrmTongQuan.cs</DependentUpon>

@@ -54,6 +54,11 @@ namespace Quan_ly_chi_tieu_sinh_vien
 
                 if (dt.Rows.Count > 0)
                 {
+                    // Lưu thông tin phiên đăng nhập
+                    LuuThongTin.MaTaiKhoan = Convert.ToInt32(dt.Rows[0]["MaTaiKhoan"]);
+                    LuuThongTin.TenDangNhap = dt.Rows[0]["TenDangNhap"].ToString();
+                    LuuThongTin.HoTen = dt.Rows[0]["HoTen"] != DBNull.Value ? dt.Rows[0]["HoTen"].ToString() : dt.Rows[0]["TenDangNhap"].ToString();
+
                     MessageBox.Show("Đăng nhập thành công!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Hide();                  

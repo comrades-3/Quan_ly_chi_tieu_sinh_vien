@@ -13,6 +13,7 @@ GO
 IF OBJECT_ID('vw_GiaoDich', 'V') IS NOT NULL DROP VIEW vw_GiaoDich;
 IF OBJECT_ID('GiaoDich', 'U') IS NOT NULL DROP TABLE GiaoDich;
 IF OBJECT_ID('NganSach', 'U') IS NOT NULL DROP TABLE NganSach;
+IF OBJECT_ID('TietKiem', 'U') IS NOT NULL DROP TABLE TietKiem;
 IF OBJECT_ID('DanhMuc', 'U') IS NOT NULL DROP TABLE DanhMuc;
 IF OBJECT_ID('TaiKhoan', 'U') IS NOT NULL DROP TABLE TaiKhoan;
 GO
@@ -66,6 +67,18 @@ CREATE TABLE NganSach (
     GhiChu          NVARCHAR(255),
     NgayTao         DATETIME        DEFAULT GETDATE(),
     UNIQUE(MaTaiKhoan, Thang, Nam)  
+);
+GO
+
+CREATE TABLE TietKiem (
+    MaTietKiem      INT PRIMARY KEY IDENTITY(1,1),
+    MaTaiKhoan      INT FOREIGN KEY REFERENCES TaiKhoan(MaTaiKhoan),
+    TenMucTieu      NVARCHAR(100),
+    SoTienMucTieu   DECIMAL(18,0),
+    SoTienHienCo    DECIMAL(18,0) DEFAULT 0,
+    NgayBatDau      DATE,
+    NgayKetThuc     DATE,
+    TrangThai       NVARCHAR(50) 
 );
 GO
 

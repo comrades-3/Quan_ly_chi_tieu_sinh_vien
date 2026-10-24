@@ -76,5 +76,13 @@ namespace Quan_ly_chi_tieu_sinh_vien
             sqlcomm.ExecuteNonQuery();
             CloseConnect();
         }
+
+        public void ChangeData(SqlCommand cmd)
+        {
+            OpenConnect();
+            cmd.Connection = conn;
+            cmd.ExecuteNonQuery();
+            CloseConnect();
+        }
     }
 }

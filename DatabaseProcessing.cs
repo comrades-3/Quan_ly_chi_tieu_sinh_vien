@@ -11,7 +11,7 @@ namespace Quan_ly_chi_tieu_sinh_vien
     internal class DatabaseProcessing
     {
         //kết nối sql
-        private string connectString = @"Data Source=LAPTOP-Q2F68TEG\SQLEXPRESS;Database=QuanLyChiTieuSV;Integrated Security=true";
+        private string connectString = @"Data Source=LAPTOP-95EQJM80\SQLEXPRESS;Database=QuanLyChiTieuSV;Integrated Security=true";
         private SqlConnection conn = null;
 
         private void OpenConnect()

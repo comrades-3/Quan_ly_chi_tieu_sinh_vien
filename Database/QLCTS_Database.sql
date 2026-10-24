@@ -139,3 +139,14 @@ INNER JOIN TaiKhoan tk ON gd.MaTaiKhoan = tk.MaTaiKhoan
 INNER JOIN DanhMuc  dm ON gd.MaDanhMuc  = dm.MaDanhMuc;
 GO
 
+CREATE TABLE TietKiem (
+    MaTietKiem INT PRIMARY KEY IDENTITY(1,1),
+    MaTaiKhoan INT FOREIGN KEY REFERENCES TaiKhoan(MaTaiKhoan),
+    TenMucTieu NVARCHAR(100),
+    SoTienMucTieu DECIMAL(18,0),
+    SoTienHienCo DECIMAL(18,0) DEFAULT 0,
+    NgayBatDau DATE,
+    NgayKetThuc DATE,
+    TrangThai NVARCHAR(50) 
+);
+GO

@@ -10,6 +10,21 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Quan_ly_chi_tieu_sinh_vien
 {
+    /*
+     * CÁC CONTROL CẦN CÓ TRÊN FORM (đặt đúng tên - Name):
+     *   cboThang      ComboBox  (DropDownStyle = DropDownList)
+     *   cboNam        ComboBox  (DropDownStyle = DropDownList)
+     *   btnXuatExcel  Button
+     *   lblTongThu    Label     (hiện tổng thu)
+     *   lblTongChi    Label     (hiện tổng chi)
+     *   lblChenhLech  Label     (hiện chênh lệch)
+     *   dgvDanhMuc    DataGridView  (bảng tổng hợp theo danh mục)
+     *   chartChi      Chart     (biểu đồ: thống kê chi tiêu theo danh mục)
+     *   chartThu      Chart     (biểu đồ: thống kê thu nhập theo danh mục)
+     *
+     * Các sự kiện (Load, SelectedIndexChanged, Click) được gắn bằng code trong
+     * constructor, nên KHÔNG double-click vào control để tạo sự kiện (tránh bị gắn 2 lần).
+     */
     public partial class FrmBaoCao : Form
     {
         private readonly DatabaseProcessing db = new DatabaseProcessing();
@@ -30,11 +45,16 @@ namespace Quan_ly_chi_tieu_sinh_vien
             btnXuatExcel.Click += btnXuatExcel_Click;
         }
 
+        /// <summary>
+        /// TODO: thay bằng mã tài khoản của người đang đăng nhập (lấy từ FrmDangNhap).
+        /// Tạm thời trả về 1 = tài khoản test sinhvien01.
+        /// </summary>
         private int LayMaTaiKhoan()
         {
             return 1;
         }
 
+        // ======================= KHỞI TẠO =======================
 
         private void FrmBaoCao_Load(object sender, EventArgs e)
         {
@@ -72,6 +92,7 @@ namespace Quan_ly_chi_tieu_sinh_vien
             dgvDanhMuc.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
+        // ======================= TRUY VẤN =======================
 
         // Tổng tiền theo từng danh mục (cả THU lẫn CHI) trong kỳ đã chọn
         private DataTable LayTongHopTheoDanhMuc(int thang, int nam)
@@ -88,19 +109,6 @@ namespace Quan_ly_chi_tieu_sinh_vien
             cmd.Parameters.Add("@tk", SqlDbType.Int).Value = LayMaTaiKhoan();
             cmd.Parameters.Add("@nam", SqlDbType.Int).Value = nam;
             cmd.Parameters.Add("@thang", SqlDbType.Int).Value = thang;
-            return db.ReadData(cmd);
-        }
-
-        // Tổng thu / chi của từng tháng trong năm
-        private DataTable LayTongHopTheoThang(int nam)
-        {
-            SqlCommand cmd = new SqlCommand(
-                @"SELECT MONTH(NgayGiaoDich) AS Thang, LoaiGiaoDich, SUM(SoTien) AS TongTien
-                  FROM GiaoDich
-                  WHERE MaTaiKhoan = @tk AND YEAR(NgayGiaoDich) = @nam
-                  GROUP BY MONTH(NgayGiaoDich), LoaiGiaoDich");
-            cmd.Parameters.Add("@tk", SqlDbType.Int).Value = LayMaTaiKhoan();
-            cmd.Parameters.Add("@nam", SqlDbType.Int).Value = nam;
             return db.ReadData(cmd);
         }
 
@@ -145,8 +153,8 @@ namespace Quan_ly_chi_tieu_sinh_vien
                 lblChenhLech.ForeColor = chenhLech >= 0 ? MauXanh : MauChi;
 
                 HienBangDanhMuc(dt, tongThu, tongChi);
-                VeBieuDoTronChi(dt, thang, nam);
-                VeBieuDoCotTheoThang(nam);
+                VeBieuDoTron(chartChi, dt, "CHI", thang, nam);   // thống kê chi tiêu theo danh mục
+                VeBieuDoTron(chartThu, dt, "THU", thang, nam);   // thống kê thu nhập theo danh mục
             }
             catch (Exception ex)
             {
@@ -200,61 +208,35 @@ namespace Quan_ly_chi_tieu_sinh_vien
             }
         }
 
-        // Biểu đồ tròn: cơ cấu chi tiêu theo danh mục (theo kỳ đang chọn)
-        private void VeBieuDoTronChi(DataTable dt, int thang, int nam)
+        /// <summary>
+        /// Vẽ biểu đồ tròn cơ cấu theo danh mục.
+        /// loai = "CHI" -> thống kê chi tiêu; loai = "THU" -> thống kê thu nhập.
+        /// (Muốn đổi dạng biểu đồ: sửa SeriesChartType.Pie thành Doughnut hoặc Bar.)
+        /// </summary>
+        private void VeBieuDoTron(Chart chart, DataTable dt, string loai, int thang, int nam)
         {
-            ChuanBiChart(chartChi);
+            ChuanBiChart(chart);
+
+            bool laChi = loai == "CHI";
             string ky = thang == 0 ? "năm " + nam : "tháng " + thang + "/" + nam;
 
-            Series s = new Series("Chi");
+            Series s = new Series(loai);
             s.ChartType = SeriesChartType.Pie;
             s.Label = "#PERCENT{P1}";
             s.LegendText = "#VALX";
+            s["PieLabelStyle"] = "Outside";
+            s["PieLineColor"] = "Gray";
+            if (!laChi) s.Palette = ChartColorPalette.SeaGreen;   // thu nhập: tông xanh lá
 
-            foreach (DataRow r in dt.Select("LoaiGiaoDich = 'CHI'", "TongTien DESC"))
+            foreach (DataRow r in dt.Select("LoaiGiaoDich = '" + loai + "'", "TongTien DESC"))
                 s.Points.AddXY(r["TenDanhMuc"].ToString(), Convert.ToDouble(r["TongTien"]));
 
-            chartChi.Series.Add(s);
-            chartChi.Titles.Add(s.Points.Count > 0
-                ? "Cơ cấu chi tiêu " + ky
-                : "Chưa có khoản chi nào trong " + ky);
-        }
+            chart.Series.Add(s);
 
-        // Biểu đồ cột: thu và chi của 12 tháng trong năm đang chọn
-        private void VeBieuDoCotTheoThang(int nam)
-        {
-            ChuanBiChart(chartThang);
-
-            decimal[] thu = new decimal[13];
-            decimal[] chi = new decimal[13];
-            foreach (DataRow r in LayTongHopTheoThang(nam).Rows)
-            {
-                int t = Convert.ToInt32(r["Thang"]);
-                decimal tien = Convert.ToDecimal(r["TongTien"]);
-                if (r["LoaiGiaoDich"].ToString() == "THU") thu[t] = tien; else chi[t] = tien;
-            }
-
-            Series sThu = new Series("Thu");
-            sThu.ChartType = SeriesChartType.Column;
-            sThu.Color = MauThu;
-            Series sChi = new Series("Chi");
-            sChi.ChartType = SeriesChartType.Column;
-            sChi.Color = MauChi;
-
-            for (int m = 1; m <= 12; m++)
-            {
-                sThu.Points.AddXY("T" + m, Convert.ToDouble(thu[m]));
-                sChi.Points.AddXY("T" + m, Convert.ToDouble(chi[m]));
-            }
-
-            chartThang.Series.Add(sThu);
-            chartThang.Series.Add(sChi);
-            chartThang.Titles.Add("Thu - Chi theo tháng, năm " + nam);
-
-            ChartArea area = chartThang.ChartAreas[0];
-            area.AxisY.LabelStyle.Format = "N0";
-            area.AxisX.Interval = 1;
-            area.AxisY.MajorGrid.LineColor = Color.Gainsboro;
+            if (s.Points.Count > 0)
+                chart.Titles.Add("Cơ cấu " + (laChi ? "chi tiêu" : "thu nhập") + " theo danh mục, " + ky);
+            else
+                chart.Titles.Add("Chưa có khoản " + (laChi ? "chi" : "thu") + " nào trong " + ky);
         }
 
         // Xóa dữ liệu cũ, đảm bảo chart có ChartArea và Legend

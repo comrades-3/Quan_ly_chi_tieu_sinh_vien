@@ -1,7 +1,7 @@
 
 #   Tên Form              Chức năng                                          
 --  --------------------  -------------------------------------------------  
-1   frmDangNhap           Đăng nhập hệ thống,đăng ký                                
+1   frmDangNhap           Đăng nhập hệ thống,đăng ký                         BẮT BUỘC
 2   frmMain               Form chính, điều hướng menu                        BẮT BUỘC
 3   frmQuanLyThuChi       Xem danh sách thu chi, lọc tháng/năm,              BẮT BUỘC
                           tổng thu/chi/số dư
@@ -37,7 +37,6 @@ frmDoiMatKhau         TaiKhoan
 frmNganSach           NganSach
 
 - Tài khoản test: sinhvien01 / 123456
-- Mật khẩu lưu dạng MD5 hash
 - Danh mục mặc định (LaMacDinh = 1): KHÔNG cho phép xóa
 - Danh mục tự tạo (LaMacDinh = 0): cho phép Sửa/Xóa
 - frmThemSuaGiaoDich mở bằng ShowDialog() từ frmQuanLyThuChi

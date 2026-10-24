@@ -84,16 +84,14 @@ namespace Quan_ly_chi_tieu_sinh_vien
 
         private void btnBaoCao_Click(object sender, EventArgs e)
         {
-            FrmBaoCao frmBaoCao = new FrmBaoCao();
-            frmBaoCao.Show();
-            this.Close();
+            LoadForm(new FrmBaoCao());
+
         }
 
         private void btnTietKiem_Click(object sender, EventArgs e)
         {
-            FrmTietKiem frmTietKiem = new FrmTietKiem();
-            frmTietKiem.Show();
-            this.Close();
+            LoadForm(new FrmTietKiem());
+
         }
     }
 }

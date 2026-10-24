@@ -118,6 +118,7 @@
     <Compile Include="FrmTongQuan.Designer.cs">
       <DependentUpon>FrmTongQuan.cs</DependentUpon>
     </Compile>
+    <Compile Include="LuuThongTin.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmBaoCao.resx">

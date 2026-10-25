@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +16,26 @@ namespace Quan_ly_chi_tieu_sinh_vien
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmDangNhap());
+
+            while (true)
+            {
+                using (FrmDangNhap frmLogin = new FrmDangNhap())
+                {
+                    if (frmLogin.ShowDialog() != DialogResult.OK)
+                    {
+                        break;
+                    }
+                }
+
+                using (FrmDashboard frmMain = new FrmDashboard())
+                {
+                    Application.Run(frmMain);
+                    if (!frmMain.IsDangXuat)
+                    {
+                        break;
+                    }
+                }
+            }
         }
     }
 }

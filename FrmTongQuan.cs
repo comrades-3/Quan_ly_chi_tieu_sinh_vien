@@ -28,7 +28,50 @@ namespace Quan_ly_chi_tieu_sinh_vien
             {
                 label1.Text = $"Xin chào, {LuuThongTin.HoTen}! 👋";
             }
+            CauHinhBieuDo();
             LoadDuLieu();
+        }
+
+        private void CauHinhBieuDo()
+        {
+            try
+            {
+                // Biểu đồ tròn
+                chartCoCau.BackColor = Color.White;
+                if (chartCoCau.ChartAreas.Count > 0)
+                {
+                    chartCoCau.ChartAreas[0].BackColor = Color.White;
+                }
+                if (chartCoCau.Legends.Count > 0)
+                {
+                    chartCoCau.Legends[0].BackColor = Color.White;
+                    chartCoCau.Legends[0].Font = new Font("Segoe UI", 8.5F, FontStyle.Regular);
+                    chartCoCau.Legends[0].ForeColor = Color.FromArgb(71, 85, 105);
+                }
+
+                // Biểu đồ cột Thu - Chi
+                chartThuChi.BackColor = Color.White;
+                if (chartThuChi.ChartAreas.Count > 0)
+                {
+                    var ca = chartThuChi.ChartAreas[0];
+                    ca.BackColor = Color.White;
+                    ca.AxisX.MajorGrid.LineColor = Color.FromArgb(241, 245, 249);
+                    ca.AxisY.MajorGrid.LineColor = Color.FromArgb(241, 245, 249);
+                    ca.AxisX.LineColor = Color.FromArgb(226, 232, 240);
+                    ca.AxisY.LineColor = Color.FromArgb(226, 232, 240);
+                    ca.AxisX.LabelStyle.Font = new Font("Segoe UI", 8.5F);
+                    ca.AxisY.LabelStyle.Font = new Font("Segoe UI", 8.5F);
+                    ca.AxisX.LabelStyle.ForeColor = Color.FromArgb(100, 116, 139);
+                    ca.AxisY.LabelStyle.ForeColor = Color.FromArgb(100, 116, 139);
+                }
+                if (chartThuChi.Legends.Count > 0)
+                {
+                    chartThuChi.Legends[0].BackColor = Color.White;
+                    chartThuChi.Legends[0].Font = new Font("Segoe UI", 8.5F, FontStyle.Regular);
+                    chartThuChi.Legends[0].ForeColor = Color.FromArgb(71, 85, 105);
+                }
+            }
+            catch { }
         }
 
         public void LoadDuLieu()
@@ -85,6 +128,7 @@ namespace Quan_ly_chi_tieu_sinh_vien
                 {
                     chartCoCau.Series["ChiTieu"].Points.Clear();
                     chartCoCau.Series["ChiTieu"]["PieLabelStyle"] = "Disabled";
+                    chartCoCau.Series["ChiTieu"]["DoughnutRadius"] = "60";
                     chartCoCau.Series["ChiTieu"].ToolTip = "#VALX: #VALY{N0} ₫ (#PERCENT)";
                 }
 
@@ -100,11 +144,23 @@ namespace Quan_ly_chi_tieu_sinh_vien
                     foreach (DataRow r in dt.Rows)
                         chartCoCau.Series["ChiTieu"].Points.AddXY(r["TenDanhMuc"].ToString(), Convert.ToDouble(r["TongChi"]));
                 }
-                else
+
+                Color[] modernColors = new Color[]
                 {
-                    chartCoCau.Series["ChiTieu"].Points.AddXY("Ăn uống", 1200000);
-                    chartCoCau.Series["ChiTieu"].Points.AddXY("Nhà trọ", 1500000);
-                    chartCoCau.Series["ChiTieu"].Points.AddXY("Đi lại", 300000);
+                    Color.FromArgb(99, 102, 241),  // Indigo
+                    Color.FromArgb(239, 68, 68),   // Rose Red
+                    Color.FromArgb(16, 185, 129),  // Emerald Green
+                    Color.FromArgb(245, 158, 11),  // Amber
+                    Color.FromArgb(6, 182, 212),   // Cyan
+                    Color.FromArgb(168, 85, 247),  // Purple
+                    Color.FromArgb(236, 72, 153),  // Pink
+                    Color.FromArgb(20, 184, 166)   // Teal
+                };
+                int cIdx = 0;
+                foreach (System.Windows.Forms.DataVisualization.Charting.DataPoint pt in chartCoCau.Series["ChiTieu"].Points)
+                {
+                    pt.Color = modernColors[cIdx % modernColors.Length];
+                    cIdx++;
                 }
             }
             catch { }
@@ -114,12 +170,21 @@ namespace Quan_ly_chi_tieu_sinh_vien
         {
             try
             {
-           
                 string seriesThu = chartThuChi.Series.IndexOf("Thu Nhập") != -1 ? "Thu Nhập" : (chartThuChi.Series.IndexOf("Thu nhập") != -1 ? "Thu nhập" : null);
                 string seriesChi = chartThuChi.Series.IndexOf("Chi tiêu") != -1 ? "Chi tiêu" : (chartThuChi.Series.IndexOf("Chi Tiêu") != -1 ? "Chi Tiêu" : null);
 
-                if (seriesThu != null) chartThuChi.Series[seriesThu].Points.Clear();
-                if (seriesChi != null) chartThuChi.Series[seriesChi].Points.Clear();
+                if (seriesThu != null)
+                {
+                    chartThuChi.Series[seriesThu].Points.Clear();
+                    chartThuChi.Series[seriesThu].Color = Color.FromArgb(16, 185, 129);
+                    chartThuChi.Series[seriesThu]["PointWidth"] = "0.6";
+                }
+                if (seriesChi != null)
+                {
+                    chartThuChi.Series[seriesChi].Points.Clear();
+                    chartThuChi.Series[seriesChi].Color = Color.FromArgb(244, 63, 94);
+                    chartThuChi.Series[seriesChi]["PointWidth"] = "0.6";
+                }
 
                 DateTime now = DateTime.Now;
                 int maTK = LuuThongTin.MaTaiKhoan;
@@ -158,6 +223,20 @@ namespace Quan_ly_chi_tieu_sinh_vien
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnThemGiaoDich_Click(object sender, EventArgs e)
+        {
+            FrmDashboard dashboard = this.FindForm() as FrmDashboard ?? Application.OpenForms.OfType<FrmDashboard>().FirstOrDefault();
+            if (dashboard != null)
+            {
+                dashboard.ChuyenTrangQuanLyThuChi();
+            }
+            else
+            {
+                FrmQuanLyThuChi frm = new FrmQuanLyThuChi();
+                frm.Show();
+            }
         }
     }
 }

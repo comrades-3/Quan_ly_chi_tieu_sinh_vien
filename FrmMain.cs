@@ -13,6 +13,7 @@ namespace Quan_ly_chi_tieu_sinh_vien
 {
     public partial class FrmDashboard : Form
     {
+        public bool IsDangXuat { get; private set; } = false;
         private bool menuphongto = false;
         private const int MENU_BAN_DAU = 210;  
         private const int MENU_PHONG_TO = 265;
@@ -20,6 +21,7 @@ namespace Quan_ly_chi_tieu_sinh_vien
         public FrmDashboard()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
             btnMenu.IconChar = IconChar.Bars;
             btnMenu.IconColor = Color.White;
             btnMenu.IconSize = 22;
@@ -33,7 +35,7 @@ namespace Quan_ly_chi_tieu_sinh_vien
         }
 
 
-        private void LoadForm(Form frm)
+        public void LoadForm(Form frm)
         {
             if (frm == this)
                 return;
@@ -46,6 +48,11 @@ namespace Quan_ly_chi_tieu_sinh_vien
 
             pnlMain.Controls.Add(frm);
             frm.Show();
+        }
+
+        public void ChuyenTrangQuanLyThuChi()
+        {
+            LoadForm(new FrmQuanLyThuChi());
         }
 
         private void pnlMain_Paint(object sender, PaintEventArgs e)
@@ -76,10 +83,12 @@ namespace Quan_ly_chi_tieu_sinh_vien
 
         private void btnDangXuat_Click(object sender, EventArgs e)
         {
-            FrmDangNhap frmDangNhap = new FrmDangNhap();
-            frmDangNhap.Show();
-            this.Close();
-
+            if (MessageBox.Show("Bạn có chắc chắn muốn đăng xuất?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                IsDangXuat = true;
+                LuuThongTin.DangXuat();
+                this.Close();
+            }
         }
 
         private void btnBaoCao_Click(object sender, EventArgs e)

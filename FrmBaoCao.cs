@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -32,7 +32,7 @@ namespace Quan_ly_chi_tieu_sinh_vien
 
         private int LayMaTaiKhoan()
         {
-            return 1;
+            return LuuThongTin.MaTaiKhoan;
         }
 
         private void FrmBaoCao_Load(object sender, EventArgs e)
@@ -288,6 +288,11 @@ namespace Quan_ly_chi_tieu_sinh_vien
             if (s.Contains(phanCach) || s.IndexOfAny(new char[] { '"', '\r', '\n' }) >= 0)
                 return "\"" + s.Replace("\"", "\"\"") + "\"";
             return s;
+        }
+
+        private void FrmBaoCao_Load_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -121,6 +121,9 @@
     <Compile Include="LuuThongTin.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmBaoCao.resx">
+      <DependentUpon>FrmBaoCao.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmDangKy.resx">
       <DependentUpon>FrmDangKy.cs</DependentUpon>
     </EmbeddedResource>

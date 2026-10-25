@@ -10,21 +10,6 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Quan_ly_chi_tieu_sinh_vien
 {
-    /*
-     * CÁC CONTROL CẦN CÓ TRÊN FORM (đặt đúng tên - Name):
-     *   cboThang      ComboBox  (DropDownStyle = DropDownList)
-     *   cboNam        ComboBox  (DropDownStyle = DropDownList)
-     *   btnXuatExcel  Button
-     *   lblTongThu    Label     (hiện tổng thu)
-     *   lblTongChi    Label     (hiện tổng chi)
-     *   lblChenhLech  Label     (hiện chênh lệch)
-     *   dgvDanhMuc    DataGridView  (bảng tổng hợp theo danh mục)
-     *   chartChi      Chart     (biểu đồ: thống kê chi tiêu theo danh mục)
-     *   chartThu      Chart     (biểu đồ: thống kê thu nhập theo danh mục)
-     *
-     * Các sự kiện (Load, SelectedIndexChanged, Click) được gắn bằng code trong
-     * constructor, nên KHÔNG double-click vào control để tạo sự kiện (tránh bị gắn 2 lần).
-     */
     public partial class FrmBaoCao : Form
     {
         private readonly DatabaseProcessing db = new DatabaseProcessing();
@@ -45,16 +30,10 @@ namespace Quan_ly_chi_tieu_sinh_vien
             btnXuatExcel.Click += btnXuatExcel_Click;
         }
 
-        /// <summary>
-        /// TODO: thay bằng mã tài khoản của người đang đăng nhập (lấy từ FrmDangNhap).
-        /// Tạm thời trả về 1 = tài khoản test sinhvien01.
-        /// </summary>
         private int LayMaTaiKhoan()
         {
             return 1;
         }
-
-        // ======================= KHỞI TẠO =======================
 
         private void FrmBaoCao_Load(object sender, EventArgs e)
         {
@@ -92,8 +71,6 @@ namespace Quan_ly_chi_tieu_sinh_vien
             dgvDanhMuc.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        // ======================= TRUY VẤN =======================
-
         // Tổng tiền theo từng danh mục (cả THU lẫn CHI) trong kỳ đã chọn
         private DataTable LayTongHopTheoDanhMuc(int thang, int nam)
         {
@@ -127,8 +104,6 @@ namespace Quan_ly_chi_tieu_sinh_vien
             cmd.Parameters.Add("@thang", SqlDbType.Int).Value = thang;
             return db.ReadData(cmd);
         }
-
-        // ======================= HIỂN THỊ BÁO CÁO =======================
 
         private void TaiBaoCao()
         {
@@ -208,11 +183,6 @@ namespace Quan_ly_chi_tieu_sinh_vien
             }
         }
 
-        /// <summary>
-        /// Vẽ biểu đồ tròn cơ cấu theo danh mục.
-        /// loai = "CHI" -> thống kê chi tiêu; loai = "THU" -> thống kê thu nhập.
-        /// (Muốn đổi dạng biểu đồ: sửa SeriesChartType.Pie thành Doughnut hoặc Bar.)
-        /// </summary>
         private void VeBieuDoTron(Chart chart, DataTable dt, string loai, int thang, int nam)
         {
             ChuanBiChart(chart);
@@ -247,8 +217,6 @@ namespace Quan_ly_chi_tieu_sinh_vien
             if (c.ChartAreas.Count == 0) c.ChartAreas.Add(new ChartArea("Area1"));
             if (c.Legends.Count == 0) c.Legends.Add(new Legend("Legend1"));
         }
-
-        // ======================= XUẤT EXCEL (CSV) =======================
 
         private void btnXuatExcel_Click(object sender, EventArgs e)
         {

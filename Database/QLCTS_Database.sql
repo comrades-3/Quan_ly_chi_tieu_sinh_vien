@@ -1,7 +1,5 @@
-
 USE master;
 GO
-
 
 IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N'QuanLyChiTieuSV')
 BEGIN
@@ -12,8 +10,13 @@ GO
 USE QuanLyChiTieuSV;
 GO
 
-
+IF OBJECT_ID('vw_GiaoDich', 'V') IS NOT NULL DROP VIEW vw_GiaoDich;
+IF OBJECT_ID('GiaoDich', 'U') IS NOT NULL DROP TABLE GiaoDich;
+IF OBJECT_ID('NganSach', 'U') IS NOT NULL DROP TABLE NganSach;
+IF OBJECT_ID('TietKiem', 'U') IS NOT NULL DROP TABLE TietKiem;
+IF OBJECT_ID('DanhMuc', 'U') IS NOT NULL DROP TABLE DanhMuc;
 IF OBJECT_ID('TaiKhoan', 'U') IS NOT NULL DROP TABLE TaiKhoan;
+GO
 
 CREATE TABLE TaiKhoan (
     MaTaiKhoan      INT PRIMARY KEY IDENTITY(1,1),
@@ -32,20 +35,15 @@ CREATE TABLE TaiKhoan (
 );
 GO
 
-
-IF OBJECT_ID('DanhMuc', 'U') IS NOT NULL DROP TABLE DanhMuc;
-
 CREATE TABLE DanhMuc (
     MaDanhMuc       INT PRIMARY KEY IDENTITY(1,1),
     TenDanhMuc      NVARCHAR(100)   NOT NULL,
     LoaiDanhMuc     NVARCHAR(5)     NOT NULL CHECK (LoaiDanhMuc IN ('THU', 'CHI')),
     MoTa            NVARCHAR(255),
-    LaMacDinh       BIT             DEFAULT 0,           -- 1: mặc định, không xóa được
+    LaMacDinh       BIT             DEFAULT 0,
     NgayTao         DATETIME        DEFAULT GETDATE()
 );
 GO
-
-IF OBJECT_ID('GiaoDich', 'U') IS NOT NULL DROP TABLE GiaoDich;
 
 CREATE TABLE GiaoDich (
     MaGiaoDich      INT PRIMARY KEY IDENTITY(1,1),
@@ -60,8 +58,6 @@ CREATE TABLE GiaoDich (
 );
 GO
 
-IF OBJECT_ID('NganSach', 'U') IS NOT NULL DROP TABLE NganSach;
-
 CREATE TABLE NganSach (
     MaNganSach      INT PRIMARY KEY IDENTITY(1,1),
     MaTaiKhoan      INT             NOT NULL FOREIGN KEY REFERENCES TaiKhoan(MaTaiKhoan),
@@ -74,8 +70,17 @@ CREATE TABLE NganSach (
 );
 GO
 
-
-
+CREATE TABLE TietKiem (
+    MaTietKiem      INT PRIMARY KEY IDENTITY(1,1),
+    MaTaiKhoan      INT FOREIGN KEY REFERENCES TaiKhoan(MaTaiKhoan),
+    TenMucTieu      NVARCHAR(100),
+    SoTienMucTieu   DECIMAL(18,0),
+    SoTienHienCo    DECIMAL(18,0) DEFAULT 0,
+    NgayBatDau      DATE,
+    NgayKetThuc     DATE,
+    TrangThai       NVARCHAR(50) 
+);
+GO
 
 INSERT INTO DanhMuc (TenDanhMuc, LoaiDanhMuc, MoTa, LaMacDinh) VALUES
 (N'Ăn uống',               'CHI', N'Chi phí ăn uống hàng ngày',              1),
@@ -107,7 +112,6 @@ VALUES (
 );
 GO
 
-
 INSERT INTO GiaoDich (MaTaiKhoan, MaDanhMuc, LoaiGiaoDich, SoTien, NgayGiaoDich, GhiChu)
 VALUES
 (1, 10, 'THU', 3000000, '2026-10-01', N'Tiền nhà gửi tháng 10'),
@@ -117,9 +121,6 @@ VALUES
 (1,  4, 'CHI', 1500000, '2026-10-05', N'Tiền phòng tháng 10'),
 (1,  1, 'CHI',   80000, '2026-10-10', N'Ăn trưa + tối'),
 (1,  6, 'CHI',  100000, '2026-10-15', N'Cafe với bạn bè');
-GO
-
-IF OBJECT_ID('vw_GiaoDich', 'V') IS NOT NULL DROP VIEW vw_GiaoDich;
 GO
 
 CREATE VIEW vw_GiaoDich AS
@@ -137,16 +138,4 @@ SELECT
 FROM GiaoDich gd
 INNER JOIN TaiKhoan tk ON gd.MaTaiKhoan = tk.MaTaiKhoan
 INNER JOIN DanhMuc  dm ON gd.MaDanhMuc  = dm.MaDanhMuc;
-GO
-
-CREATE TABLE TietKiem (
-    MaTietKiem INT PRIMARY KEY IDENTITY(1,1),
-    MaTaiKhoan INT FOREIGN KEY REFERENCES TaiKhoan(MaTaiKhoan),
-    TenMucTieu NVARCHAR(100),
-    SoTienMucTieu DECIMAL(18,0),
-    SoTienHienCo DECIMAL(18,0) DEFAULT 0,
-    NgayBatDau DATE,
-    NgayKetThuc DATE,
-    TrangThai NVARCHAR(50) 
-);
 GO

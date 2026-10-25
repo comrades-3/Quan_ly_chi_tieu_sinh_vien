@@ -15,6 +15,7 @@ namespace Quan_ly_chi_tieu_sinh_vien
         public FrmDangNhap()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void FrmDangNhap_Load(object sender, EventArgs e)
@@ -63,9 +64,7 @@ namespace Quan_ly_chi_tieu_sinh_vien
 
                     MessageBox.Show("Đăng nhập thành công!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.Hide();                  
-                    FrmDashboard frmMain = new FrmDashboard();
-                    frmMain.ShowDialog();        
+                    this.DialogResult = DialogResult.OK;
                     this.Close();                
                 }
                 else

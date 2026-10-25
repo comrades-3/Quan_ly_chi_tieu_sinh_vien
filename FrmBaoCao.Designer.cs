@@ -85,7 +85,6 @@
             this.btnXuatExcel.TabIndex = 2;
             this.btnXuatExcel.Text = "Xuất excel";
             this.btnXuatExcel.UseVisualStyleBackColor = true;
-            this.btnXuatExcel.Click += new System.EventHandler(this.btnXuatExcel_Click);
             // 
             // lblTongThu
             // 

@@ -29,8 +29,14 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.tongThuLabel = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.tongChiLabel = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cB_thang = new System.Windows.Forms.ComboBox();
             this.cB_giaodich = new System.Windows.Forms.ComboBox();
@@ -48,13 +54,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.b_timkiem = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.tongThuLabel = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.tongChiLabel = new System.Windows.Forms.Label();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -67,34 +68,97 @@
             // 
             this.panel1.Controls.Add(this.tongThuLabel);
             this.panel1.Controls.Add(this.label6);
-            this.panel1.Location = new System.Drawing.Point(179, 108);
+            this.panel1.Location = new System.Drawing.Point(60, 89);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(232, 100);
+            this.panel1.Size = new System.Drawing.Size(288, 100);
             this.panel1.TabIndex = 0;
+            // 
+            // tongThuLabel
+            // 
+            this.tongThuLabel.AutoSize = true;
+            this.tongThuLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tongThuLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.tongThuLabel.Location = new System.Drawing.Point(22, 39);
+            this.tongThuLabel.Name = "tongThuLabel";
+            this.tongThuLabel.Size = new System.Drawing.Size(56, 32);
+            this.tongThuLabel.TabIndex = 19;
+            this.tongThuLabel.Text = "0 đ";
+            this.tongThuLabel.Click += new System.EventHandler(this.tongThuLabel_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(13, 12);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(78, 16);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "TỔNG THU";
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.tongChiLabel);
             this.panel2.Controls.Add(this.label7);
-            this.panel2.Location = new System.Drawing.Point(535, 108);
+            this.panel2.Location = new System.Drawing.Point(398, 89);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(219, 100);
+            this.panel2.Size = new System.Drawing.Size(284, 100);
             this.panel2.TabIndex = 1;
+            // 
+            // tongChiLabel
+            // 
+            this.tongChiLabel.AutoSize = true;
+            this.tongChiLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tongChiLabel.ForeColor = System.Drawing.Color.Red;
+            this.tongChiLabel.Location = new System.Drawing.Point(25, 39);
+            this.tongChiLabel.Name = "tongChiLabel";
+            this.tongChiLabel.Size = new System.Drawing.Size(56, 32);
+            this.tongChiLabel.TabIndex = 21;
+            this.tongChiLabel.Text = "0 đ";
+            this.tongChiLabel.Click += new System.EventHandler(this.tongChiLabel_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(13, 12);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(71, 16);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "TỔNG CHI";
             // 
             // panel3
             // 
             this.panel3.Controls.Add(this.label10);
             this.panel3.Controls.Add(this.label8);
-            this.panel3.Location = new System.Drawing.Point(899, 108);
+            this.panel3.Location = new System.Drawing.Point(731, 89);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(235, 100);
+            this.panel3.Size = new System.Drawing.Size(296, 100);
             this.panel3.TabIndex = 1;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.label10.Location = new System.Drawing.Point(25, 39);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(56, 32);
+            this.label10.TabIndex = 20;
+            this.label10.Text = "0 đ";
+            this.label10.Click += new System.EventHandler(this.label10_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(17, 12);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(49, 16);
+            this.label8.TabIndex = 11;
+            this.label8.Text = "SỐ DƯ";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Century", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(173, 35);
+            this.label1.Location = new System.Drawing.Point(54, 16);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(253, 33);
             this.label1.TabIndex = 2;
@@ -157,7 +221,7 @@
             // 
             // TimKiem
             // 
-            this.TimKiem.Location = new System.Drawing.Point(839, 280);
+            this.TimKiem.Location = new System.Drawing.Point(720, 261);
             this.TimKiem.Multiline = true;
             this.TimKiem.Name = "TimKiem";
             this.TimKiem.Size = new System.Drawing.Size(268, 29);
@@ -168,7 +232,7 @@
             // 
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(193, 382);
+            this.dataGridView1.Location = new System.Drawing.Point(74, 363);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
@@ -235,7 +299,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(836, 250);
+            this.label5.Location = new System.Drawing.Point(717, 231);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(63, 16);
             this.label5.TabIndex = 16;
@@ -260,30 +324,12 @@
             this.groupBox1.Controls.Add(this.cB_giaodich);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Location = new System.Drawing.Point(179, 237);
+            this.groupBox1.Location = new System.Drawing.Point(60, 218);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(955, 89);
+            this.groupBox1.Size = new System.Drawing.Size(967, 89);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(13, 12);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(78, 16);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "TỔNG THU";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(13, 12);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(71, 16);
-            this.label7.TabIndex = 10;
-            this.label7.Text = "TỔNG CHI";
             // 
             // groupBox2
             // 
@@ -292,63 +338,18 @@
             this.groupBox2.Controls.Add(this.b_csv);
             this.groupBox2.Controls.Add(this.b_xoa);
             this.groupBox2.Controls.Add(this.b_load);
-            this.groupBox2.Location = new System.Drawing.Point(179, 332);
+            this.groupBox2.Location = new System.Drawing.Point(60, 313);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(967, 295);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Danh Sách Giao Dịch";
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(17, 12);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(49, 16);
-            this.label8.TabIndex = 11;
-            this.label8.Text = "SỐ DƯ";
-            // 
-            // tongThuLabel
-            // 
-            this.tongThuLabel.AutoSize = true;
-            this.tongThuLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tongThuLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.tongThuLabel.Location = new System.Drawing.Point(22, 39);
-            this.tongThuLabel.Name = "tongThuLabel";
-            this.tongThuLabel.Size = new System.Drawing.Size(56, 32);
-            this.tongThuLabel.TabIndex = 19;
-            this.tongThuLabel.Text = "0 đ";
-            this.tongThuLabel.Click += new System.EventHandler(this.tongThuLabel_Click);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label10.Location = new System.Drawing.Point(25, 39);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(56, 32);
-            this.label10.TabIndex = 20;
-            this.label10.Text = "0 đ";
-            this.label10.Click += new System.EventHandler(this.label10_Click);
-            // 
-            // tongChiLabel
-            // 
-            this.tongChiLabel.AutoSize = true;
-            this.tongChiLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tongChiLabel.ForeColor = System.Drawing.Color.Red;
-            this.tongChiLabel.Location = new System.Drawing.Point(25, 39);
-            this.tongChiLabel.Name = "tongChiLabel";
-            this.tongChiLabel.Size = new System.Drawing.Size(56, 32);
-            this.tongChiLabel.TabIndex = 21;
-            this.tongChiLabel.Text = "0 đ";
-            this.tongChiLabel.Click += new System.EventHandler(this.tongChiLabel_Click);
-            // 
             // FrmQuanLyThuChi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1207, 665);
+            this.ClientSize = new System.Drawing.Size(1086, 665);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.TimKiem);
@@ -404,5 +405,6 @@
         private System.Windows.Forms.Label tongThuLabel;
         private System.Windows.Forms.Label tongChiLabel;
         private System.Windows.Forms.Label label10;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

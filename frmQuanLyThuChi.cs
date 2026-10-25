@@ -179,7 +179,8 @@ namespace Quan_ly_chi_tieu_sinh_vien
         {
             if (dataGridView1.CurrentRow != null && dataGridView1.CurrentRow.Cells["Mã GD"].Value != null)
             {
-                FrmThemSuaGiaoDich frm = new FrmThemSuaGiaoDich();
+                int maGD = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Mã GD"].Value);
+                FrmThemSuaGiaoDich frm = new FrmThemSuaGiaoDich(maGD);
                 frm.ShowDialog();
                 LoadData();
             }

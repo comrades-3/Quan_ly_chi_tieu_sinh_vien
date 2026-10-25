@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +13,8 @@ namespace Quan_ly_chi_tieu_sinh_vien
 {
     public partial class FrmDangKy : Form
     {
+        public string TenDangNhapMoi { get; private set; } = "";
+
         public FrmDangKy()
         {
             InitializeComponent();
@@ -56,22 +58,23 @@ namespace Quan_ly_chi_tieu_sinh_vien
                 txtXNMatKhau.Focus();
                 return;
             }
-            if (!string.IsNullOrEmpty(email))
+            if (string.IsNullOrEmpty(email))
             {
-                // Kiểm tra định dạng email đơn giản
-                if (!Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
-                {
-                    MessageBox.Show("Email không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtEmail.Focus();
-                    return;
-                }
+                MessageBox.Show("Vui lòng nhập địa chỉ email.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtEmail.Focus();
+                return;
+            }
+            if (!Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                MessageBox.Show("Email không đúng định dạng (ví dụ: sinhvien@gmail.com).", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtEmail.Focus();
+                return;
             }
 
             try
             {
                 DatabaseProcessing db = new DatabaseProcessing();
 
-             
                 string sqlCheck = $"SELECT COUNT(*) FROM TaiKhoan WHERE TenDangNhap = N'{tenTK}'";
                 DataTable dtCheck = db.ReadData(sqlCheck);
                 int count = Convert.ToInt32(dtCheck.Rows[0][0]);
@@ -82,11 +85,22 @@ namespace Quan_ly_chi_tieu_sinh_vien
                     return;
                 }
 
-                string emailValue = string.IsNullOrEmpty(email) ? "NULL" : $"N'{email}'";
+                string sqlCheckEmail = $"SELECT COUNT(*) FROM TaiKhoan WHERE Email = N'{email}'";
+                DataTable dtCheckEmail = db.ReadData(sqlCheckEmail);
+                if (Convert.ToInt32(dtCheckEmail.Rows[0][0]) > 0)
+                {
+                    MessageBox.Show("Email này đã được đăng ký. Vui lòng sử dụng email khác.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtEmail.Focus();
+                    return;
+                }
+
                 string sql = $"INSERT INTO TaiKhoan (TenDangNhap, MatKhau, Email) " +
-                             $"VALUES (N'{tenTK}', N'{matKhau}', {emailValue})";
+                             $"VALUES (N'{tenTK}', N'{matKhau}', N'{email}')";
 
                 db.ChangeData(sql);
+
+                TenDangNhapMoi = tenTK;
+                this.DialogResult = DialogResult.OK;
 
                 MessageBox.Show("Đăng ký thành công! Bạn có thể đăng nhập ngay bây giờ.",
                     "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -103,10 +117,16 @@ namespace Quan_ly_chi_tieu_sinh_vien
 
         private void btnQuayLai_Click(object sender, EventArgs e)
         {
-            FrmDangNhap frmDangNhap = new FrmDangNhap();
-            frmDangNhap.Show();
-            this.Close();
-
+            if (this.Modal)
+            {
+                this.Close();
+            }
+            else
+            {
+                FrmDangNhap frmDangNhap = new FrmDangNhap();
+                frmDangNhap.Show();
+                this.Close();
+            }
         }
     }
 }

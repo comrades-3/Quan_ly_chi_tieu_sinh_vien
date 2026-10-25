@@ -33,7 +33,7 @@ namespace Quan_ly_chi_tieu_sinh_vien
         }
 
 
-        private void LoadForm(Form frm)
+        public void LoadForm(Form frm)
         {
             if (frm == this)
                 return;
@@ -46,6 +46,11 @@ namespace Quan_ly_chi_tieu_sinh_vien
 
             pnlMain.Controls.Add(frm);
             frm.Show();
+        }
+
+        public void ChuyenTrangQuanLyThuChi()
+        {
+            LoadForm(new FrmQuanLyThuChi());
         }
 
         private void pnlMain_Paint(object sender, PaintEventArgs e)
@@ -76,10 +81,10 @@ namespace Quan_ly_chi_tieu_sinh_vien
 
         private void btnDangXuat_Click(object sender, EventArgs e)
         {
+            LuuThongTin.DangXuat();
             FrmDangNhap frmDangNhap = new FrmDangNhap();
             frmDangNhap.Show();
             this.Close();
-
         }
 
         private void btnBaoCao_Click(object sender, EventArgs e)

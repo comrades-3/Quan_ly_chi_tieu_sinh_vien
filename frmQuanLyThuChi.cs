@@ -55,7 +55,7 @@ namespace Quan_ly_chi_tieu_sinh_vien
             try
             {
                 string query = "SELECT g.MaGiaoDich AS [Mã GD], d.TenDanhMuc AS [Danh mục], g.LoaiGiaoDich AS [Loại GD], g.SoTien AS [Số tiền], g.NgayGiaoDich AS [Ngày GD], g.GhiChu AS [Ghi chú] " +
-                               "FROM GiaoDich g JOIN DanhMuc d ON g.MaDanhMuc = d.MaDanhMuc WHERE 1=1";
+                               $"FROM GiaoDich g JOIN DanhMuc d ON g.MaDanhMuc = d.MaDanhMuc WHERE g.MaTaiKhoan = {LuuThongTin.MaTaiKhoan}";
 
                 if (cB_thang.SelectedIndex > 0)
                 {
@@ -199,7 +199,7 @@ namespace Quan_ly_chi_tieu_sinh_vien
                     try
                     {
                         string maGD = dataGridView1.CurrentRow.Cells["Mã GD"].Value.ToString();
-                        db.ChangeData("DELETE FROM GiaoDich WHERE MaGiaoDich = " + maGD);
+                        db.ChangeData($"DELETE FROM GiaoDich WHERE MaGiaoDich = {maGD} AND MaTaiKhoan = {LuuThongTin.MaTaiKhoan}");
                         LoadData();
                     }
                     catch (Exception ex)

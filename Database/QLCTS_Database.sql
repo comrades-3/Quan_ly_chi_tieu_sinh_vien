@@ -23,7 +23,7 @@ CREATE TABLE TaiKhoan (
     TenDangNhap     NVARCHAR(50)    NOT NULL UNIQUE,
     MatKhau         NVARCHAR(256)   NOT NULL,           
     HoTen           NVARCHAR(100),
-    Email           NVARCHAR(100),
+    Email           NVARCHAR(100)   NOT NULL,
     SoDienThoai     NVARCHAR(15),
     NgaySinh        DATE,
     GioiTinh        NVARCHAR(10),                  

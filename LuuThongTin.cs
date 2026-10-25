@@ -4,9 +4,17 @@ namespace Quan_ly_chi_tieu_sinh_vien
 {
     public static class LuuThongTin
     {
-        // Mặc định = 1 (tài khoản mẫu sinhvien01) để khi test form đơn lẻ vẫn có dữ liệu
-        public static int MaTaiKhoan = 1;
-        public static string TenDangNhap = "sinhvien01";
-        public static string HoTen = "Sinh viên";
+        public static int MaTaiKhoan = 0;
+        public static string TenDangNhap = "";
+        public static string HoTen = "";
+        public static string Email = "";
+
+        public static void DangXuat()
+        {
+            MaTaiKhoan = 0;
+            TenDangNhap = "";
+            HoTen = "";
+            Email = "";
+        }
     }
 }

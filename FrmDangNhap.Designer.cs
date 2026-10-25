@@ -71,20 +71,19 @@ namespace Quan_ly_chi_tieu_sinh_vien
             this.lblBrand.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(108)))), ((int)(((byte)(165)))));
             this.lblBrand.Location = new System.Drawing.Point(26, 24);
             this.lblBrand.Name = "lblBrand";
-            this.lblBrand.Size = new System.Drawing.Size(264, 20);
+            this.lblBrand.Size = new System.Drawing.Size(219, 20);
             this.lblBrand.TabIndex = 0;
             this.lblBrand.Text = "QUẢN LÝ CHI TIÊU SINH VIÊN";
             // 
             // label1
             // 
-            this.lblBrand.BackColor = System.Drawing.Color.Transparent;
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.label1.Location = new System.Drawing.Point(22, 46);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(193, 46);
+            this.label1.Size = new System.Drawing.Size(194, 46);
             this.label1.TabIndex = 1;
             this.label1.Text = "Đăng nhập";
             // 
@@ -96,7 +95,7 @@ namespace Quan_ly_chi_tieu_sinh_vien
             this.lblSub.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.lblSub.Location = new System.Drawing.Point(26, 92);
             this.lblSub.Name = "lblSub";
-            this.lblSub.Size = new System.Drawing.Size(248, 20);
+            this.lblSub.Size = new System.Drawing.Size(241, 20);
             this.lblSub.TabIndex = 2;
             this.lblSub.Text = "Vui lòng nhập tài khoản để tiếp tục";
             // 
@@ -127,7 +126,7 @@ namespace Quan_ly_chi_tieu_sinh_vien
             this.txtTK.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.txtTK.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(108)))), ((int)(((byte)(165)))));
             this.txtTK.Location = new System.Drawing.Point(26, 150);
-            this.txtTK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtTK.Margin = new System.Windows.Forms.Padding(4);
             this.txtTK.Name = "txtTK";
             this.txtTK.PasswordChar = '\0';
             this.txtTK.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
@@ -135,6 +134,7 @@ namespace Quan_ly_chi_tieu_sinh_vien
             this.txtTK.SelectedText = "";
             this.txtTK.Size = new System.Drawing.Size(358, 42);
             this.txtTK.TabIndex = 4;
+            this.txtTK.TextChanged += new System.EventHandler(this.txtTK_TextChanged);
             // 
             // label3
             // 
@@ -163,7 +163,7 @@ namespace Quan_ly_chi_tieu_sinh_vien
             this.txtMK.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.txtMK.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(108)))), ((int)(((byte)(165)))));
             this.txtMK.Location = new System.Drawing.Point(26, 229);
-            this.txtMK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtMK.Margin = new System.Windows.Forms.Padding(4);
             this.txtMK.Name = "txtMK";
             this.txtMK.PasswordChar = '●';
             this.txtMK.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));

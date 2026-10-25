@@ -97,5 +97,10 @@ namespace Quan_ly_chi_tieu_sinh_vien
             FrmQuenMatKhau frmQuenMatKhau = new FrmQuenMatKhau();
             frmQuenMatKhau.ShowDialog();
         }
+
+        private void txtTK_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

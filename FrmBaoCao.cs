@@ -243,10 +243,11 @@ namespace Quan_ly_chi_tieu_sinh_vien
                         : "BaoCao_" + nam + "_" + thang.ToString("00");
                     if (sfd.ShowDialog() != DialogResult.OK) return;
 
+                    string pc = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+
                     decimal tongThu = 0, tongChi = 0;
                     StringBuilder sb = new StringBuilder();
-                    sb.AppendLine("sep=,");   // báo cho Excel biết dấu phân cách là dấu phẩy
-                    sb.AppendLine("Ngày,Loại,Danh mục,Số tiền,Ghi chú");
+                    sb.AppendLine(string.Join(pc, new string[] { "Ngày", "Loại", "Danh mục", "Số tiền", "Ghi chú" }));
 
                     foreach (DataRow r in dt.Rows)
                     {
@@ -254,21 +255,20 @@ namespace Quan_ly_chi_tieu_sinh_vien
                         decimal tien = Convert.ToDecimal(r["SoTien"]);
                         if (laThu) tongThu += tien; else tongChi += tien;
 
-                        sb.AppendLine(string.Join(",", new string[]
+                        sb.AppendLine(string.Join(pc, new string[]
                         {
                             Convert.ToDateTime(r["NgayGiaoDich"]).ToString("dd/MM/yyyy"),
                             laThu ? "Thu" : "Chi",
-                            CsvEscape(r["TenDanhMuc"].ToString()),
+                            CsvEscape(r["TenDanhMuc"].ToString(), pc),
                             tien.ToString("0", CultureInfo.InvariantCulture),
-                            CsvEscape(r["GhiChu"] == DBNull.Value ? "" : r["GhiChu"].ToString())
+                            CsvEscape(r["GhiChu"] == DBNull.Value ? "" : r["GhiChu"].ToString(), pc)
                         }));
                     }
 
                     sb.AppendLine();
-                    sb.AppendLine("Tổng thu,,," + tongThu.ToString("0", CultureInfo.InvariantCulture) + ",");
-                    sb.AppendLine("Tổng chi,,," + tongChi.ToString("0", CultureInfo.InvariantCulture) + ",");
-                    sb.AppendLine("Chênh lệch,,," + (tongThu - tongChi).ToString("0", CultureInfo.InvariantCulture) + ",");
-
+                    sb.AppendLine(string.Join(pc, new string[] { "Tổng thu", "", "", tongThu.ToString("0", CultureInfo.InvariantCulture), "" }));
+                    sb.AppendLine(string.Join(pc, new string[] { "Tổng chi", "", "", tongChi.ToString("0", CultureInfo.InvariantCulture), "" }));
+                    sb.AppendLine(string.Join(pc, new string[] { "Chênh lệch", "", "", (tongThu - tongChi).ToString("0", CultureInfo.InvariantCulture), "" }));
                     // UTF-8 có BOM để Excel hiển thị đúng tiếng Việt
                     File.WriteAllText(sfd.FileName, sb.ToString(), new UTF8Encoding(true));
 
@@ -283,9 +283,9 @@ namespace Quan_ly_chi_tieu_sinh_vien
             }
         }
 
-        private static string CsvEscape(string s)
+        private static string CsvEscape(string s, string phanCach)
         {
-            if (s.IndexOfAny(new char[] { ',', '"', '\r', '\n' }) >= 0)
+            if (s.Contains(phanCach) || s.IndexOfAny(new char[] { '"', '\r', '\n' }) >= 0)
                 return "\"" + s.Replace("\"", "\"\"") + "\"";
             return s;
         }
